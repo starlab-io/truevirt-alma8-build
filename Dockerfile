@@ -36,7 +36,13 @@ RUN \
     which \
     \
     # Python 3.6 (matches meson)
-    python36 python36-devel python3-docutils python3-flake8 \
+    python36 \
+    python36-devel \
+    python3-docutils \
+    python3-flake8 \
+    python3-importlib-metadata \
+    python3-pycodestyle \
+    python3-pyflakes \
     \
     # Container signal handling
     tini \
@@ -55,12 +61,14 @@ RUN \
     diffstat \
     dmidecode \
     dwarves \
+    firewalld-filesystem \
     flex \
     fuse-devel \
     fuse3 \
     gcc-toolset-11 \
     gcc-toolset-11-annobin-annocheck \
     gcc-toolset-11-annobin-plugin-gcc \
+    gettext \
     git \
     glib2-devel \
     glibc-devel \
@@ -100,6 +108,7 @@ RUN \
     pkgconf \
     pkgconf-m4 \
     pkgconf-pkg-config \
+    polkit \
     qemu-img \
     readline-devel \
     redhat-rpm-config \
