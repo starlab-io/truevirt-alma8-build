@@ -162,5 +162,5 @@ session    sufficient    pam_permit.so\n\
 # Apply some nice bash defaults
 COPY mybash.sh /etc/profile.d/
 
-ENTRYPOINT ["/usr/local/bin/startup_script", "/usr/bin/tini", "--"]
+ENTRYPOINT ["/usr/local/bin/startup_script", "/usr/bin/tini", "/usr/bin/scl", "--", "enable", "gcc-toolset-11", "--"]
 CMD ["/bin/bash", "-l"]
