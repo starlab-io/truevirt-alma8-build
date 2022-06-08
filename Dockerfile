@@ -5,9 +5,14 @@ ENV LANG=C.utf-8
 ENV LC_ALL=C.utf-8
 ENV RUSTUP_HOME=/usr/local/rust
 ENV PATH="$PATH:$RUSTUP_HOME/bin"
+ENV container=docker
 
 # DNF package config
 RUN \
+    # Limit AlmaLinux packages to 8.6 minor release
+    dnf update -y almalinux-release-8.6 && \
+    find /etc/yum.repos.d/ -name almalinux*.repo -print | xargs sed -i 's/$releasever/$releasever.6/' && \
+    \
     # Enable PowerTools repo
     dnf install -y dnf-plugins-core && \
     dnf config-manager -y --set-enabled powertools && \
@@ -15,9 +20,9 @@ RUN \
     # Enable EPEL repo
     dnf install -y epel-release && \
     \
-    # Enable Openstack repo (for Open vSwitch)
-    dnf install -y https://repos.fedorapeople.org/repos/openstack/openstack-yoga/rdo-release-yoga-1.el8.noarch.rpm && \
-    dnf config-manager --set-disabled centos-rabbitmq-38 ceph-pacific && \
+    # Enable Openstack repo for OpenvSwitch
+    dnf install -y https://www.rdoproject.org/repos/rdo-release.el8.rpm && \
+    dnf config-manager --set-disabled advanced-virtualization centos-rabbitmq-38 ceph-pacific openstack-yoga && \
     \
     # Update existing packages
     dnf update -y && \
@@ -27,11 +32,14 @@ RUN \
 
 # Extra DNF packages
 RUN \
-    dnf install --setopt=install_weak_deps=False -y \
+    dnf install --setopt install_weak_deps=False -y \
     \
     # Convenience / documentation
     bash-completion \
+    file \
+    man-db \
     man-pages \
+    procps-ng \
     sudo \
     which \
     \
