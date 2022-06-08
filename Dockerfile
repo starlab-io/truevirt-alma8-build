@@ -138,8 +138,9 @@ RUN curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | \
     rm -rf "$CARGO_HOME/registry" /tmp/* /var/tmp/*
 
 # Setup Python
-RUN pip3 install --upgrade pip && \
-    alternatives --set python /usr/bin/python3 && \
+RUN alternatives --set python /usr/bin/python3 && \
+    pip3 install --upgrade pip && \
+    pip3 install git-archive-all && \
     rm -rf /tmp/* /var/tmp/*
 
 # Allow any user to have sudo access within the container
